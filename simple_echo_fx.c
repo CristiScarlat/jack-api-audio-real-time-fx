@@ -22,7 +22,7 @@ unsigned int bufferIndex = 0;
 
 //Echo FX Parameter
 unsigned int echoDelay = 15;
-
+unsigned int feedBackDelay = 2;
 
 /**
  * The process callback for this JACK application is called in a
@@ -47,7 +47,7 @@ int process(jack_nframes_t nframes, void *arg)
 		   sizeof(jack_default_audio_sample_t) * nframes);
 
 	for(unsigned int i=0; i<nframes; i++){
-		buffer[bufferIndex + i] = in[i] + mixedSignal[i]/2;
+		buffer[bufferIndex + i] = in[i] + mixedSignal[i]/feedBackDelay;
 	}
 
 	if(bufferIndex >= sizeof(jack_default_audio_sample_t) * nframes * echoDelay)bufferIndex = 0;
